@@ -64,7 +64,7 @@ bitflags! {
     pub(crate) struct PushSegmentFlags: u8 {
         /// The bounds should be updated.
         const UPDATE_BOUNDS = 0x01;
-        /// The "from" point of the segme
+        /// The "from" point of the segment
         const INCLUDE_FROM_POINT = 0x02;
     }
 }

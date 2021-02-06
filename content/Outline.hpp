@@ -3,8 +3,9 @@
 #include <vector>
 #include <glm/vec2.hpp>
 #include <optional>
-#include <../geometry/RectF.hpp>
-#include <../geometry/Transform2F.hpp>
+#include "../geometry/RectF.hpp"
+#include "../geometry/Transform2F.hpp"
+#include "Segment.hpp"
 
 namespace pf {
 	enum class PointFlags : uint8_t {
@@ -13,6 +14,12 @@ namespace pf {
 		Control1 = 2,
 		All = 3
 	};
+	enum class ArcDirection {
+		/// Clockwise, starting from the +x axis.
+		CW,
+		/// Counterclockwise, starting from the +x axis.
+		CCW,
+	}
 
 	struct Contour {
 		struct Point {
@@ -43,11 +50,14 @@ namespace pf {
 		void updateBounds();
 
 		void pushPoint(const glm::vec2& p, PointFlags pflags, bool updateBounds);
-		//void pushSegment();
+		void pushSegment(const Segment & seg, bool updateBounds);
 		void pushEllipse(const Transform2F& form);
+		void pushArc(const Transform2F& form, float s, float e, ArcDirection dir);
+		void pushArcFromUnitChord(const Transform2F& form, const LineSegment2F & chord, ArcDirection dir);
 
 		void pushQuadratic(const glm::vec2 & p0, const glm::vec2 & p1);
 		void pushCubic(const glm::vec2& p0, const glm::vec2& p1, const glm::vec2 & p2);
+		void pushEndpoint(const glm::vec2 & p);
 
 		iterator begin() noexcept;
 		iterator end() noexcept;
@@ -71,6 +81,15 @@ namespace pf {
 
 		Outline();
 
+		void closeAllContours() noexcept;
+
+		// number of contours in the outline.
+		std::size_t size() const noexcept;
+
+		void push(const Outline& outline);
+
+		void dilate(float amount);
+		void dilate(const glm::vec2& amount);
 
 		std::vector<Contour> contours;
 		RectF bounds;
