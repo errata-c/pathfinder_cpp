@@ -62,13 +62,13 @@ namespace pf {
 		return upperLeft() == lowerRight();
 	}
 
-	RectF RectF::enclose(const glm::vec2& point) const {
+	RectF RectF::merge(const glm::vec2& point) const {
 		return RectF::fromPoints(
 			glm::min(origin(), point),
 			glm::max(lowerRight(), point)
 		);
 	}
-	RectF RectF::enclose(const RectF& rect) const {
+	RectF RectF::merge(const RectF& rect) const {
 		return RectF::fromPoints(
 			glm::min(origin(), rect.origin()),
 			glm::max(lowerRight(), rect.lowerRight())

@@ -3,7 +3,7 @@
 #include <glm/vec3.hpp>
 #include <glm/mat2x2.hpp>
 #include <glm/mat4x4.hpp>
-#include <glm/gtc/quat.hpp>
+#include <glm/gtc/quaternion.hpp>
 
 namespace pf {
 	struct Transform3F {

@@ -29,8 +29,8 @@ namespace pf {
 		bool contains(const RectF& rect) const;
 		bool isEmpty() const;
 
-		RectF enclose(const glm::vec2& point) const;
-		RectF enclose(const RectF& rect) const;
+		RectF merge(const glm::vec2& point) const;
+		RectF merge(const RectF& rect) const;
 
 		bool intersects(const RectF& rect) const;
 		std::optional<RectF> intersection(const RectF & rect) const;
@@ -89,8 +89,8 @@ namespace pf {
 		bool contains(const RectI& rect) const;
 		bool isEmpty() const;
 
-		RectI enclose(const glm::ivec2& point) const;
-		RectI enclose(const RectI& rect) const;
+		RectI merge(const glm::ivec2& point) const;
+		RectI merge(const RectI& rect) const;
 
 		bool intersects(const RectI& rect) const;
 		std::optional<RectI> intersection(const RectI& rect) const;

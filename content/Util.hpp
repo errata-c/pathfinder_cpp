@@ -4,6 +4,7 @@
 #include <glm/vec2.hpp>
 #include <glm/vec3.hpp>
 #include <glm/vec4.hpp>
+#include <glm/mat2x2.hpp>
 #include <functional>
 #include <cmath>
 
@@ -69,7 +70,26 @@ namespace pf {
 			return static_cast<T>(0);
 		}
 		else {
-			return std::sqrt<T>(val);
+			return std::sqrt(val);
 		}
 	}
+
+	// rotate v1 by v2
+	static glm::vec2 rotateBy(const glm::vec2& v1, const glm::vec2& v2) {
+		return glm::mat2{ v2.x, v2.y, -v2.y, v2.x } * v1;
+	}
+	// reverse rotate v1 by v2
+	static glm::vec2 revRotateBy(const glm::vec2& v1, const glm::vec2& v2) {
+		return glm::mat2{ v2.x, -v2.y, v2.y, v2.x } * v1;
+	}
+
+	static glm::vec2 halveAngle(const glm::vec2& v) {
+		glm::vec2 term{v.x, -v.x};
+		return glm::sqrt(glm::max(0.5f * (1.f + term), glm::vec2{ 0.f }));
+	}
+
+	static constexpr float
+		pi = 3.141592653,
+		tau = 6.283185307,
+		root2 = 1.414213562;
 };

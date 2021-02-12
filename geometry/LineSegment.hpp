@@ -1,8 +1,10 @@
 #pragma once
-#include <glm/vec4.hpp>
-#include <glm/mat2x2.hpp>
 #include <array>
 #include <optional>
+
+#include <glm/vec4.hpp>
+#include <glm/mat2x2.hpp>
+
 
 namespace pf {
 	struct LineSegment2F: public glm::vec4 {
@@ -11,6 +13,7 @@ namespace pf {
 		~LineSegment2F() = default;
 
 		LineSegment2F() noexcept;
+		LineSegment2F(const glm::vec4&) noexcept;
 		LineSegment2F(const glm::vec2& from, const glm::vec2& to) noexcept;
 
 		glm::vec2 from() const noexcept;

@@ -1,10 +1,12 @@
 #pragma once
 #include <optional>
-#include <glm/vec4.hpp>
-#include <glm/vec2.hpp>
+
 #include "../color/color.hpp"
 #include "../color/matrix.hpp"
 #include "../geometry/LineSegment.hpp"
+
+#include <glm/vec4.hpp>
+#include <glm/vec2.hpp>
 
 namespace pf {
     enum class BlurDirection {

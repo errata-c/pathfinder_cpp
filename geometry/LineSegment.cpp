@@ -5,6 +5,9 @@ namespace pf {
 	LineSegment2F::LineSegment2F() noexcept
 		: glm::vec4(0.f)
 	{}
+	LineSegment2F::LineSegment2F(const glm::vec4& val) noexcept
+		: glm::vec4{val}
+	{}
 	LineSegment2F::LineSegment2F(const glm::vec2& from, const glm::vec2& to) noexcept
 		: glm::vec4(from, to)
 	{}

@@ -1,6 +1,8 @@
 #include "color.hpp"
+
 #include <cmath>
 #include <ostream>
+
 #include <fmt/core.h>
 #include <fmt/ostream.h>
 
@@ -148,7 +150,12 @@ namespace pf {
 
 	ColorU ColorF::to_u8() const noexcept {
 		constexpr float scalar = 255.f;
-		return ColorU{ scalar * r, scalar * g, scalar * b, scalar * a };
+		return ColorU{ 
+			static_cast<uint8_t>(scalar * r), 
+			static_cast<uint8_t>(scalar * g),
+			static_cast<uint8_t>(scalar * b),
+			static_cast<uint8_t>(scalar * a)
+		};
 	}
 
 	ColorF ColorF::lerp(const ColorF& other, float t) const noexcept {
@@ -185,6 +192,7 @@ std::ostream& operator<<(std::ostream& os, const pf::ColorU& val) {
 			static_cast<float>(val.a) / 255.f
 		);
 	}
+	return os;
 }
 std::ostream& operator<<(std::ostream& os, const pf::ColorF& val) {
 	fmt::print(os, "rgba({}, {}, {}, {})",
@@ -193,4 +201,5 @@ std::ostream& operator<<(std::ostream& os, const pf::ColorF& val) {
 		val.b * 255.f,
 		val.a
 	);
+	return os;
 }
