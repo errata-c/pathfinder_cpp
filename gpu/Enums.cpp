@@ -166,6 +166,14 @@ namespace pf {
 			return makeView("D3D9");
 		}
 	}
+	std::string_view to_string_view(pf::ProgramKind val) {
+		switch (val) {
+		case ProgramKind::Raster:
+			return makeView("Raster");
+		case ProgramKind::Compute:
+			return makeView("Compute");
+		}
+	}
 
 
 	std::string to_string(pf::TextureFormat val) {
@@ -202,6 +210,9 @@ namespace pf {
 		return std::string{ pf::to_string_view(val) };
 	}
 	std::string to_string(pf::FeatureLevel val) {
+		return std::string{ pf::to_string_view(val) };
+	}
+	std::string to_string(pf::ProgramKind val) {
 		return std::string{ pf::to_string_view(val) };
 	}
 };
@@ -287,6 +298,10 @@ std::ostream& operator<<(std::ostream& os, pf::FeatureLevel val) {
 	os << pf::to_string_view(val);
 	return os;
 }
+std::ostream& operator<<(std::ostream& os, pf::ProgramKind val) {
+	os << pf::to_string_view(val);
+	return os;
+}
 std::ostream& operator<<(std::ostream& os, pf::TextureSamplingFlags val) {
 	os << "[ ";
 
@@ -304,4 +319,8 @@ std::ostream& operator<<(std::ostream& os, pf::TextureSamplingFlags val) {
 	}
 	os << "]";
 	return os;
+}
+
+bool pf::contains(pf::TextureSamplingFlags lh, pf::TextureSamplingFlags rh) noexcept {
+	return (lh & rh) == rh;
 }

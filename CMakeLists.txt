@@ -18,6 +18,9 @@ target_include_directories(pathfinder_core INTERFACE
 	"$<BUILD_INTERFACE:${CMAKE_CURRENT_SOURCE_DIR}>"
 	"$<INSTALL_INTERFACE:include>"
 )
+target_compile_definitions(pathfinder_core INTERFACE
+	"$<$<CONFIG:Debug>:PF_DEBUG_ASSERTIONS>"
+)
 
 #adds pathfinder_color target
 add_subdirectory("color")

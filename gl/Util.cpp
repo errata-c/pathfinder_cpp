@@ -106,6 +106,16 @@ namespace pf {
 			return GL_UNSIGNED_SHORT;
 		}
 	}
+	int32_t convertGL(ShaderKind val) noexcept {
+		switch (val) {
+		case ShaderKind::Vertex:
+			return GL_VERTEX_SHADER;
+		case ShaderKind::Fragment:
+			return GL_FRAGMENT_SHADER;
+		case ShaderKind::Compute:
+			return GL_COMPUTE_SHADER;
+		}
+	}
 
 	int32_t glInternalFormat(TextureFormat val) noexcept {
 		switch (val) {
@@ -144,7 +154,7 @@ namespace pf {
 		}
 	}
 
-	void checkErrors() {
+	void glCheckErrors() {
 #ifdef PF_DEBUG_ASSERTIONS
 		int errCount = 0;
 		GLenum err = glGetError();

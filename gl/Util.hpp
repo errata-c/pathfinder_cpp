@@ -11,10 +11,11 @@ namespace pf {
 	int32_t convertGL(Primitive val) noexcept;
 	int32_t convertGL(StencilFunc val) noexcept;
 	int32_t convertGL(VertexAttrType val) noexcept;
+	int32_t convertGL(ShaderKind val) noexcept;
 
 	int32_t glInternalFormat(TextureFormat val) noexcept;
 	uint32_t glFormat(TextureFormat val) noexcept;
 	uint32_t glType(TextureFormat val) noexcept;
 
-	void checkErrors();
+	void glCheckErrors();
 };

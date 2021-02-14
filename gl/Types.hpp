@@ -20,7 +20,8 @@ namespace pf {
 		uint32_t ref;
 	};
 	struct GLTexture {
-		GLTexture(uint32_t _id);
+		GLTexture(uint32_t _id = 0);
+		GLTexture(uint32_t _id, glm::ivec2 _size);
 		~GLTexture();
 
 		GLTexture(GLTexture&& other) noexcept;
@@ -30,9 +31,10 @@ namespace pf {
 
 		uint32_t ref;
 		glm::ivec2 size;
+		TextureFormat format;
 	};
 	struct GLShader {
-		GLShader();
+		GLShader(uint32_t _ref = 0);
 		~GLShader();
 		GLShader(GLShader&& other) noexcept;
 		GLShader& operator=(GLShader&& other) noexcept;
@@ -60,25 +62,25 @@ namespace pf {
 		GLVertexAttr(GLVertexAttr&& other) noexcept = default;
 		GLVertexAttr& operator=(GLVertexAttr&& other) noexcept = default;
 
-		GLVertexAttr(uint32_t _ref);
+		GLVertexAttr(int32_t _ref);
 
-		const uint32_t index() const noexcept;
+		const int32_t id() const noexcept;
 	private:
-		uint32_t ref;
+		int32_t ref;
 	};
 
 	struct GLFence {
-		GLFence(struct __GLsync* _ref) noexcept;
+		GLFence(void* _ref) noexcept;
 
 		~GLFence();
 
 		GLFence(GLFence&& other) noexcept;
 		GLFence& operator=(GLFence&& other) noexcept;
 
-		struct __GLsync* id() noexcept;
-		struct __GLsync const* id() const noexcept;
+		void* id() noexcept;
+		void const* id() const noexcept;
 	private:
-		struct __GLsync* ref;
+		void* ref;
 	};
 
 	struct GLFramebuffer {
@@ -117,11 +119,14 @@ namespace pf {
 	};
 
 	struct GLUniform {
+		GLUniform(const GLUniform&) noexcept = default;
+		GLUniform& operator=(const GLUniform&) noexcept = default;
+		~GLUniform() = default;
+
 		GLUniform(uint32_t _ref);
 
-		~GLUniform();
-		GLUniform(GLUniform&& other) noexcept;
-		GLUniform& operator=(GLUniform&& other) noexcept;
+		bool operator==(const GLUniform& other) const noexcept;
+		bool operator!=(const GLUniform& other) const noexcept;
 
 		const uint32_t id() const noexcept;
 	private:
@@ -152,8 +157,34 @@ namespace pf {
 
 		const uint32_t id() const noexcept;
 
-		GLProgramParams params;
+		std::unique_ptr<GLProgramParams> params;
 	private:
 		uint32_t ref;
+	};
+
+	struct GLBufferDataReceiver {
+		GLBufferDataReceiver(const std::shared_ptr<GLBufferObject> & obj, BufferTarget tar, std::size_t b, std::size_t e);
+		GLBufferDataReceiver(GLBufferDataReceiver && other) noexcept;
+		~GLBufferDataReceiver();
+
+		GLBufferDataReceiver& operator=(GLBufferDataReceiver&& other) noexcept;
+
+		std::shared_ptr<GLBufferObject> object;
+		std::size_t begin, end;
+		BufferTarget target;
+		GLFence sync;
+	};
+
+	struct GLTextureDataReceiver {
+		GLTextureDataReceiver(uint32_t pix, glm::ivec2 _size, TextureFormat form);
+		GLTextureDataReceiver(GLTextureDataReceiver&& other) noexcept;
+		~GLTextureDataReceiver();
+
+		GLTextureDataReceiver& operator=(GLTextureDataReceiver&& other) noexcept;
+
+		uint32_t pixelBuffer;
+		glm::ivec2 size;
+		TextureFormat format;
+		GLFence sync;
 	};
 }

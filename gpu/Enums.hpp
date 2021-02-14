@@ -14,6 +14,11 @@ namespace pf {
 	std::size_t channels(TextureFormat format) noexcept;
 	std::size_t bytesPerPixel(TextureFormat format) noexcept;
 
+	enum class ProgramKind {
+		Raster,
+		Compute
+	};
+
 	enum class VertexAttrType {
 		F32,
 		I8,
@@ -111,6 +116,7 @@ namespace pf {
 	std::string_view to_string_view(pf::VertexAttrClass val);
 	std::string_view to_string_view(pf::ImageAccess val);
 	std::string_view to_string_view(pf::FeatureLevel val);
+	std::string_view to_string_view(pf::ProgramKind val);
 
 	std::string to_string(pf::TextureFormat val);
 	std::string to_string(pf::VertexAttrType val);
@@ -124,6 +130,9 @@ namespace pf {
 	std::string to_string(pf::VertexAttrClass val);
 	std::string to_string(pf::ImageAccess val);
 	std::string to_string(pf::FeatureLevel val);
+	std::string to_string(pf::ProgramKind val);
+
+	bool contains(pf::TextureSamplingFlags lh, pf::TextureSamplingFlags rh) noexcept;
 };
 
 pf::TextureSamplingFlags operator|(pf::TextureSamplingFlags lh, pf::TextureSamplingFlags rh) noexcept;
@@ -147,3 +156,4 @@ std::ostream& operator<<(std::ostream& os, pf::VertexAttrClass val);
 std::ostream& operator<<(std::ostream& os, pf::ImageAccess val);
 std::ostream& operator<<(std::ostream& os, pf::FeatureLevel val);
 std::ostream& operator<<(std::ostream& os, pf::TextureSamplingFlags val);
+std::ostream& operator<<(std::ostream& os, pf::ProgramKind val);
